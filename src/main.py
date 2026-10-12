@@ -21,7 +21,7 @@ def main():
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST", "localhost"),
         port=os.getenv("DB_PORT", "5432"),
-        database=os.getenv("DB_NAME", "northeast_weather_2024_phase2"),
+        database=os.getenv("DB_NAME", "metpipe_northeast"),
         user=os.getenv("DB_USER") or os.getenv("USER"),
         password=os.getenv("DB_PASSWORD"),
     )
@@ -34,7 +34,7 @@ def main():
     print(" ")
 
     try:
-        # Step 1: Create the database tables and views
+        # Step 1: Create or update the database tables and views
         print("Running schema.sql...")
 
         run_sql_file(
@@ -69,7 +69,7 @@ def main():
 
         print("Database connection closed.")
 
-    print("Database setup and data ingestion complete.")
+    print("Database setup and incremental data ingestion complete.")
 
 
 if __name__ == "__main__":

@@ -19,6 +19,7 @@ venv/
 !.env.example
 
 # Local datasets and generated artifacts
+data/backups/
 data/raw/*
 !data/raw/.gitkeep
 data/processed/*

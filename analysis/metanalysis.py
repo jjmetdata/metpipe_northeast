@@ -1,21 +1,26 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 from pathlib import Path
+from collections import defaultdict
 
-# csvs from ALB, BOS, JFK and PVD
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-csv_files = sorted((PROJECT_ROOT / "data" / "processed").glob("*_hourly_2024_cleaned.csv"))
+csv_files = sorted(
+    (PROJECT_ROOT / "data" / "processed").glob("*_hourly_*_cleaned.csv")
+)
 print(csv_files)
 
-dfs ={}
+station_frames = defaultdict(list)
 
 for file in csv_files:
-    # read the csv file into a dataframe
     df = pd.read_csv(file)
-    # convert the "DATE" column to datetime format
-    df['DATE'] = pd.to_datetime(df['DATE'])
-    # store the dataframe in the dictionary with the station name as the key
-    dfs[file.stem.split('_')[0]] = df
+    df["DATE"] = pd.to_datetime(df["DATE"])
+    station_frames[file.stem.split("_")[0]].append(df)
+
+# Combine all years for each station instead of overwriting earlier years.
+dfs = {
+    station: pd.concat(frames, ignore_index=True).sort_values("DATE")
+    for station, frames in station_frames.items()
+}
 
 # extract only the 54th minute for BOS, and 51th minute for ALB, JFK, and PVD
 minute_offsets = {

@@ -1,34 +1,42 @@
--- DROP DATABASE IF EXISTS "northeast_weather_2024_phase2";
--- CREATE DATABASE "northeast_weather_2024_phase2";
+-- MetPipe Northeast multi-year PostgreSQL schema.
+-- This script is non-destructive: it preserves previously ingested observations.
 
--- execute these statements to start from scratch, if necessary.
-DROP VIEW IF EXISTS "northeast_weather_2024_monthly_summary";
-DROP VIEW IF EXISTS "northeast_weather_2024_daily_summary";
-DROP VIEW IF EXISTS "northeast_weather_2024_hourly";
-DROP TABLE IF EXISTS "northeast_weather_2024";
-DROP TABLE IF EXISTS "station_metadata";
-
--- create a table to store the minute offset for each station, which will be used to filter the hourly data in the "northeast_weather_2024_hourly" view
-CREATE TABLE "station_metadata" (
+CREATE TABLE IF NOT EXISTS "station_metadata" (
     "station" VARCHAR(3) PRIMARY KEY,
-    "minute_offset" INT NOT NULL CHECK("minute_offset" >= 0 AND "minute_offset" < 60)
+    "minute_offset" INT NOT NULL
+        CHECK ("minute_offset" >= 0 AND "minute_offset" < 60)
 );
 
--- the minute offsets are based on the observation times in the original CSV files, which are not exactly on the hour.
--- we filter the hourly data in the "northeast_weather_2024_hourly" view,
--- which only includes rows where the minute part of the "datetime" column matches the corresponding minute offset for each station.
+-- The minute offsets identify each station's representative hourly report.
+-- Update this metadata if a station's reporting schedule changes.
 INSERT INTO "station_metadata" ("station", "minute_offset") VALUES
-('BOS', 54),
-('ALB', 51),
-('JFK', 51),
-('PVD', 51);
+    ('BOS', 54),
+    ('ALB', 51),
+    ('JFK', 51),
+    ('PVD', 51),
+    ('BDL', 51),
+    ('BTV', 54),
+    ('MHT', 53),
+    ('ORH', 54),
+    ('PVC', 56),
+    ('PWM', 51),
+    ('AUG', 53),
+    ('BAF', 53),
+    ('DDH', 54),
+    ('EWB', 53),
+    ('HVN', 53),
+    ('HYA', 56),
+    ('LEB', 53),
+    ('MVY', 53),
+    ('PYM', 52),
+    ('UUU', 53)
+ON CONFLICT ("station") DO UPDATE
+SET "minute_offset" = EXCLUDED."minute_offset";
 
--- create the table to store the raw hourly weather data for the Northeast region in 2024
--- with a composite primary key of "datetime" and "station",
--- and a foreign key constraint on the "station" column referencing the "station_metadata" table
-CREATE TABLE "northeast_weather_2024" (
-    "datetime" TIMESTAMP,
-    "station" VARCHAR(3),
+CREATE TABLE IF NOT EXISTS "weather_observations" (
+    "datetime" TIMESTAMP NOT NULL,
+    "station" VARCHAR(3) NOT NULL,
+    "report_type" VARCHAR(10),
     "temperature" DOUBLE PRECISION,
     "dewpoint" DOUBLE PRECISION,
     "relative_humidity" DOUBLE PRECISION,
@@ -42,9 +50,27 @@ CREATE TABLE "northeast_weather_2024" (
     FOREIGN KEY ("station") REFERENCES "station_metadata" ("station")
 );
 
+-- Existing databases created before report-type tracking gain the new column.
+ALTER TABLE "weather_observations"
+ADD COLUMN IF NOT EXISTS "report_type" VARCHAR(10);
 
--- keep the date up to the hour part only, and filter the hourly data based on the minute offsets for each station
-CREATE VIEW "northeast_weather_2024_hourly" AS
+CREATE INDEX IF NOT EXISTS "weather_observations_station_datetime_idx"
+ON "weather_observations" ("station", "datetime");
+
+-- Select the scheduled observation minute for each station and hour. Missing
+-- scheduled reports stay missing rather than being replaced by special reports.
+CREATE OR REPLACE VIEW "weather_hourly" AS
+WITH "scheduled_observations" AS (
+    SELECT w.*,
+        ROW_NUMBER() OVER (
+            PARTITION BY w."station", date_trunc('hour', w."datetime")
+            ORDER BY w."datetime"
+        ) AS "observation_rank"
+    FROM "weather_observations" w
+    JOIN "station_metadata" m ON w."station" = m."station"
+    WHERE w."report_type" = 'FM-15'
+      AND EXTRACT(MINUTE FROM w."datetime") = m."minute_offset"
+)
 SELECT
     date_trunc('hour', w."datetime") AS "datetime",
     w."station",
@@ -57,42 +83,48 @@ SELECT
     w."wind_direction",
     w."wind_speed",
     w."wind_gust"
-FROM "northeast_weather_2024" w
-JOIN "station_metadata" m ON w."station" = m."station"
-WHERE EXTRACT(MINUTE FROM w."datetime") = m."minute_offset";
+FROM "scheduled_observations" w
+WHERE w."observation_rank" = 1;
 
--- daily and monthly numbers for each station
--- skip sky conditions and wind direction for the monthly summary (for now), since they require special handling
-
--- for the daily summary, we will calculate the average temperature, dewpoint, relative humidity, station pressure, wind speed, and wind gust for each station on each day,
--- and the total precipitation for each station on each day
-CREATE VIEW "northeast_weather_2024_daily_summary" AS
+CREATE OR REPLACE VIEW "weather_daily_summary" AS
 SELECT
     DATE("datetime") AS "date",
     "station",
-    ROUND(AVG("temperature")::numeric,1) AS "avg_temperature",
-    ROUND(AVG("dewpoint")::numeric,1) AS "avg_dewpoint",
-    ROUND(AVG("relative_humidity")::numeric,1) AS "avg_relative_humidity",
-    ROUND(SUM("precipitation")::numeric,2) AS "total_precipitation",
-    ROUND(AVG("station_pressure")::numeric,2) AS "avg_station_pressure",
-    ROUND(AVG("wind_speed")::numeric,1) AS "avg_wind_speed",
-    ROUND(AVG("wind_gust")::numeric,1) AS "avg_wind_gust"
-FROM "northeast_weather_2024_hourly"
+    ROUND(AVG("temperature")::numeric, 1) AS "avg_temperature",
+    ROUND(AVG("dewpoint")::numeric, 1) AS "avg_dewpoint",
+    ROUND(AVG("relative_humidity")::numeric, 1) AS "avg_relative_humidity",
+    ROUND(SUM("precipitation")::numeric, 2) AS "total_precipitation",
+    ROUND(AVG("station_pressure")::numeric, 2) AS "avg_station_pressure",
+    ROUND(AVG("wind_speed")::numeric, 1) AS "avg_wind_speed",
+    ROUND(AVG("wind_gust")::numeric, 1) AS "avg_wind_gust"
+FROM "weather_hourly"
 GROUP BY DATE("datetime"), "station";
 
-
--- for the monthly summary, we will calculate the average temperature, dewpoint, relative humidity, station pressure, wind speed, and wind gust for each station in each month,
--- and the total precipitation for each station in each month
-CREATE VIEW "northeast_weather_2024_monthly_summary" AS
+-- date_trunc retains the year, so January 2024 and January 2025 remain distinct.
+CREATE OR REPLACE VIEW "weather_monthly_summary" AS
 SELECT
-    EXTRACT(MONTH FROM "datetime") AS "month",
+    date_trunc('month', "datetime")::date AS "month",
     "station",
-    ROUND(AVG("temperature")::numeric,1) AS "avg_temperature",
-    ROUND(AVG("dewpoint")::numeric,1) AS "avg_dewpoint",
-    ROUND(AVG("relative_humidity")::numeric,1) AS "avg_relative_humidity",
-    ROUND(SUM("precipitation")::numeric,2) AS "total_precipitation",
-    ROUND(AVG("station_pressure")::numeric,2) AS "avg_station_pressure",
-    ROUND(AVG("wind_speed")::numeric,1) AS "avg_wind_speed",
-    ROUND(AVG("wind_gust")::numeric,1) AS "avg_wind_gust"
-FROM "northeast_weather_2024_hourly"
-GROUP BY EXTRACT(MONTH FROM "datetime"), "station";
+    ROUND(AVG("temperature")::numeric, 1) AS "avg_temperature",
+    ROUND(AVG("dewpoint")::numeric, 1) AS "avg_dewpoint",
+    ROUND(AVG("relative_humidity")::numeric, 1) AS "avg_relative_humidity",
+    ROUND(SUM("precipitation")::numeric, 2) AS "total_precipitation",
+    ROUND(AVG("station_pressure")::numeric, 2) AS "avg_station_pressure",
+    ROUND(AVG("wind_speed")::numeric, 1) AS "avg_wind_speed",
+    ROUND(AVG("wind_gust")::numeric, 1) AS "avg_wind_gust"
+FROM "weather_hourly"
+GROUP BY date_trunc('month', "datetime")::date, "station";
+
+CREATE OR REPLACE VIEW "weather_annual_summary" AS
+SELECT
+    EXTRACT(YEAR FROM "datetime")::int AS "year",
+    "station",
+    ROUND(AVG("temperature")::numeric, 1) AS "avg_temperature",
+    ROUND(AVG("dewpoint")::numeric, 1) AS "avg_dewpoint",
+    ROUND(AVG("relative_humidity")::numeric, 1) AS "avg_relative_humidity",
+    ROUND(SUM("precipitation")::numeric, 2) AS "total_precipitation",
+    ROUND(AVG("station_pressure")::numeric, 2) AS "avg_station_pressure",
+    ROUND(AVG("wind_speed")::numeric, 1) AS "avg_wind_speed",
+    ROUND(AVG("wind_gust")::numeric, 1) AS "avg_wind_gust"
+FROM "weather_hourly"
+GROUP BY EXTRACT(YEAR FROM "datetime")::int, "station";

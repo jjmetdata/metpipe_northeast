@@ -2,37 +2,49 @@
 
 ## Project purpose
 
-MetPipe Northeast is a portfolio data-engineering project that cleans, stores,
-validates, and analyzes historical NOAA observations from northeastern US
+MetPipe Northeast is a portfolio data-engineering pipeline that cleans, stores,
+validates, and analyzes multi-year NOAA observations from northeastern US
 weather stations.
 
-## Current status
+## Current behavior
 
-Phase 2 is a local PostgreSQL pipeline for BOS, ALB, JFK, and PVD. The workflow
-is data cleaning, schema creation, ingestion, and manual SQL validation.
+- Raw files follow `data/raw/<year>/<station>_hourly_<year>.csv`.
+- Cleaned files go to `data/processed/<year>/`; legacy flat files are accepted.
+- A station-year is unique and its CSV must contain only that calendar year.
+- Every matching station-year file is cleaned and ingested independently.
+- PostgreSQL ingestion is incremental and idempotent by `(datetime, station)`.
+- Daily, monthly, and annual summaries retain the observation year.
+- Current local data covers twenty stations for 2020–2024, including PVC
+  (Provincetown) and ORH (Worcester).
+- `src/audit_station_minutes.py` checks the FM-15 minute and exact hourly
+  coverage by station-year; the twenty verified minutes are seeded in schema.sql.
+- The hourly view includes only FM-15 rows at the station's checked minute.
 
 ## Important paths
 
-- `README.md` — setup and usage documentation
+- `README.md` — setup, migration, and usage documentation
+- `src/file_utils.py` — strict station-year filename parsing and discovery
 - `src/main.py` — database setup and ingestion orchestration
 - `src/weather_data_cleanup.py` — raw CSV cleaning
-- `src/ingest.py` — cleaned CSV ingestion
-- `sql/schema.sql` — schema, constraints, station metadata, and views
-- `sql/checks.sql` — database validation queries
-- `sql/legacy/ingest.sql` — older manual ingestion implementation
-- `data/raw/` — local source data; ignored by Git
-- `data/processed/` — local cleaned data; ignored by Git
+- `src/ingest.py` — incremental cleaned CSV ingestion
+- `sql/schema.sql` — generic multi-year schema and views
+- `sql/checks.sql` — multi-year database validation queries
+- `sql/legacy/ingest.sql` — archived 2024-only manual ingestion
+- `data/raw/` and `data/processed/` — local data ignored by Git
 
 ## Database
 
-The default database name is `northeast_weather_2024_phase2`. Connection
-settings are controlled by the `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and
-`DB_PASSWORD` environment variables.
+The default database is `metpipe_northeast`. Connection settings use
+`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`.
+
+The schema is non-destructive. Do not reintroduce unconditional DROP statements
+into the normal pipeline. Use explicit migrations for future schema changes.
 
 ## Commands
 
 ```bash
 python3 src/weather_data_cleanup.py
 python3 src/main.py
-psql -d northeast_weather_2024_phase2 -f sql/checks.sql
+psql -d metpipe_northeast -f sql/checks.sql
+python3 -m unittest discover -s tests -v
 ```
