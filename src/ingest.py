@@ -83,7 +83,8 @@ INSERT_SQL = text(
         "station_pressure" = EXCLUDED."station_pressure",
         "wind_direction" = EXCLUDED."wind_direction",
         "wind_speed" = EXCLUDED."wind_speed",
-        "wind_gust" = EXCLUDED."wind_gust";
+        "wind_gust" = EXCLUDED."wind_gust"
+    WHERE "weather_observations"."source_dataset" = 'LCDv1';
     '''
 )
 

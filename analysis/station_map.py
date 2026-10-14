@@ -13,6 +13,7 @@ BOUNDARIES_PATH = (
 )
 CANDIDATES_PATH = PROJECT_ROOT / "analysis" / "candidate_stations.csv"
 OUTPUT_PATH = PROJECT_ROOT / "outputs" / "station_map.html"
+NETWORK_PATH = PROJECT_ROOT / "analysis" / "assets" / "station_network.json"
 
 WIDTH = 1100
 HEIGHT = 800
@@ -40,7 +41,7 @@ LABEL_OFFSETS = {
     "PVC": (15, -15),
     "PVD": (-12, 29),
     "PWM": (14, -15),
-    "EWB": (-12, 30),
+    "EWB": (14, 28),
     "HYA": (14, 19),
     "MVY": (14, 27),
     "UUU": (-12, 26),
@@ -69,13 +70,25 @@ def station_from_csv(path):
     return None
 
 
+def load_network():
+    """Checked public coordinate snapshot for reproducible repository maps."""
+    stations = json.loads(NETWORK_PATH.read_text(encoding="utf-8"))["stations"]
+    codes = [s["code"] for s in stations]
+    if len(codes) != len(set(codes)) or set(codes) != set(HOURLY_COVERAGE):
+        raise ValueError("The checked network must contain the original twenty stations")
+    for station in stations:
+        if not WEST < station["longitude"] < EAST or not SOUTH < station["latitude"] < NORTH:
+            raise ValueError(f"Station outside map bounds: {station['code']}")
+    return stations
+
+
 def load_stations():
     station_files = {}
     for path in sorted(RAW_DIR.glob("*/*_hourly_*.csv")):
         code = path.name.split("_", 1)[0].upper()
         station_files.setdefault(code, []).append(path)
     if not station_files:
-        raise FileNotFoundError(f"No station-year CSVs found in {RAW_DIR}")
+        return load_network()
 
     stations = []
     for code in sorted(station_files):
@@ -274,7 +287,7 @@ def main():
 </head>
 <body>
   <header><h1>MetPipe Northeast stations</h1>
-    <p>{len(stations) + len(candidates)} stations · 2020–2024 availability checked · Click a marker for details</p></header>
+    <p>{len(stations) + len(candidates)} stations · Historical scope: 2005–2024 · Click a marker for details</p></header>
   <main>
     <div class="map-panel">
       <svg viewBox="0 0 {WIDTH} {HEIGHT}" role="img"
@@ -287,7 +300,7 @@ def main():
         <span><i class="key"></i>Local data</span>
         {candidate_legend}
       </div>
-      <p class="caption">All stations have reports in all 60 months of 2020–2024; individual hours and weather fields can be missing.{candidate_note} Coordinates: NOAA · Boundaries: Natural Earth (public domain)</p>
+      <p class="caption">The historical database covers 2005–2024. Individual hours and weather fields can be missing; PVC has no selected routine reports for October–November 2006. Marker coverage figures refer specifically to the checked-minute 2020–2024 LCDv1 subset.{candidate_note} Coordinates: NOAA · Boundaries: Natural Earth (public domain)</p>
     </div>
     <aside><h2>Airport codes</h2>
       <p id="selection" aria-live="polite">Select a marker to see its location and hourly coverage.</p>
@@ -301,11 +314,11 @@ def main():
       const show = () => {{
         const status = marker.dataset.status === 'candidate'
           ? `Proposed ${{marker.dataset.group}} — historical availability checked; awaiting ingestion`
-          : 'Local 2020–2024 data';
+          : 'Core network — 2005–2024 ingestion documented';
         selection.textContent = `${{marker.dataset.code}} — ${{marker.dataset.name}}\n` +
           `${{marker.dataset.lat}}° N, ${{Math.abs(Number(marker.dataset.lon)).toFixed(5)}}° W\n` +
           `${{marker.dataset.coverage}}% scheduled hourly coverage (2020–2024)\n` + status +
-          (marker.dataset.code === 'PVC' ? `\n2024 includes an October 17–25 reporting gap.` : '');
+          (marker.dataset.code === 'PVC' ? `\nNo selected routine reports: Oct–Nov 2006.\n2024 includes an October 17–25 reporting gap.\nPrecipitation availability is limited; blank values are unknown.` : '');
       }};
       marker.addEventListener('click', show);
       marker.addEventListener('keydown', event => {{

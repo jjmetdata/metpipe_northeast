@@ -54,22 +54,56 @@ CREATE TABLE IF NOT EXISTS "weather_observations" (
 ALTER TABLE "weather_observations"
 ADD COLUMN IF NOT EXISTS "report_type" VARCHAR(10);
 
+-- GHCNh backfill provenance. Existing LCDv1 values remain unchanged.
+ALTER TABLE "weather_observations"
+    ADD COLUMN IF NOT EXISTS "datetime_utc" TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS "source_dataset" TEXT NOT NULL DEFAULT 'LCDv1',
+    ADD COLUMN IF NOT EXISTS "source_file_year" INTEGER,
+    ADD COLUMN IF NOT EXISTS "source_metadata" JSONB,
+    ADD COLUMN IF NOT EXISTS "precipitation_trace" BOOLEAN;
+
+CREATE TABLE IF NOT EXISTS "ghcnh_ingestion_files" (
+    "station" VARCHAR(3) NOT NULL REFERENCES "station_metadata" ("station"),
+    "source_year" INTEGER NOT NULL,
+    "local_start" TIMESTAMP NOT NULL,
+    "local_end" TIMESTAMP NOT NULL,
+    "source_url" TEXT NOT NULL,
+    "source_sha256" TEXT NOT NULL,
+    "imported_rows" INTEGER NOT NULL,
+    "ingested_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY ("station", "source_year", "local_start", "local_end")
+);
+
 CREATE INDEX IF NOT EXISTS "weather_observations_station_datetime_idx"
 ON "weather_observations" ("station", "datetime");
 
--- Select the scheduled observation minute for each station and hour. Missing
--- scheduled reports stay missing rather than being replaced by special reports.
+-- Legacy LCDv1 keeps its checked minute. Historical GHCNh uses routine report
+-- priority, completeness and latest routine time within the hour, without
+-- applying a modern fixed minute to changing historical schedules. Specials
+-- remain stored but cannot silently fill a missing routine hour.
 CREATE OR REPLACE VIEW "weather_hourly" AS
 WITH "scheduled_observations" AS (
     SELECT w.*,
         ROW_NUMBER() OVER (
             PARTITION BY w."station", date_trunc('hour', w."datetime")
-            ORDER BY w."datetime"
+            ORDER BY
+                CASE WHEN w."source_dataset" = 'GHCNh'
+                     THEN CASE WHEN w."report_type" = 'FM-15' THEN 0
+                               WHEN w."report_type" = 'FM-12' THEN 2 ELSE 1 END
+                     ELSE 0 END,
+                CASE WHEN w."source_dataset" = 'GHCNh'
+                     THEN ((w."temperature" IS NOT NULL)::int +
+                           (w."dewpoint" IS NOT NULL)::int +
+                           (w."wind_speed" IS NOT NULL)::int) ELSE 0 END DESC,
+                CASE WHEN w."source_dataset" = 'GHCNh' THEN w."datetime" END DESC,
+                w."datetime" ASC
         ) AS "observation_rank"
     FROM "weather_observations" w
     JOIN "station_metadata" m ON w."station" = m."station"
-    WHERE w."report_type" = 'FM-15'
-      AND EXTRACT(MINUTE FROM w."datetime") = m."minute_offset"
+    WHERE (w."source_dataset" = 'LCDv1' AND w."report_type" = 'FM-15'
+           AND EXTRACT(MINUTE FROM w."datetime") = m."minute_offset")
+       OR (w."source_dataset" = 'GHCNh' AND w."report_type" IN
+           ('FM-15', 'FM-12', 'SAO', 'SY-SA', 'SYMT', 'SYAE', 'SYAU', 'SSA', 'SAAU'))
 )
 SELECT
     date_trunc('hour', w."datetime") AS "datetime",
@@ -82,9 +116,29 @@ SELECT
     w."station_pressure",
     w."wind_direction",
     w."wind_speed",
-    w."wind_gust"
+    w."wind_gust",
+    w."datetime" AS "observation_datetime",
+    w."source_dataset",
+    w."source_file_year",
+    w."source_metadata",
+    w."precipitation_trace"
 FROM "scheduled_observations" w
 WHERE w."observation_rank" = 1;
+
+-- UTC/SI interface for future model/real-time joins. Legacy data has unknown
+-- original QC/trace provenance; do not infer it from existing numeric amounts.
+CREATE OR REPLACE VIEW "weather_hourly_utc" AS
+SELECT
+    (("datetime" + interval '5 hours') AT TIME ZONE 'UTC') AS "datetime_utc",
+    (("observation_datetime" + interval '5 hours') AT TIME ZONE 'UTC') AS "observation_datetime_utc",
+    "station", ("temperature" - 32) / 1.8 AS "temperature_c",
+    ("dewpoint" - 32) / 1.8 AS "dewpoint_c", "relative_humidity",
+    "precipitation" * 25.4 AS "precipitation_mm", "precipitation_trace",
+    "sky_conditions", "station_pressure" * 33.8638866667 AS "station_pressure_hpa",
+    "wind_direction", "wind_speed" / 2.2369362921 AS "wind_speed_ms",
+    "wind_gust" / 2.2369362921 AS "wind_gust_ms",
+    "source_dataset", "source_metadata"
+FROM "weather_hourly";
 
 CREATE OR REPLACE VIEW "weather_daily_summary" AS
 SELECT

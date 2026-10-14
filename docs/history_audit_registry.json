@@ -1,0 +1,1511 @@
+{
+  "audit_date": "2026-10-12",
+  "locations": [
+    {
+      "location_id": "USW00014753",
+      "code": null,
+      "name": "BLUE HILL LCD",
+      "state": "MA",
+      "lat": 42.2122,
+      "lon": -71.1136,
+      "daily_ids": [
+        "USW00014753",
+        "USC00190736"
+      ],
+      "primary_daily_id": "USW00014753",
+      "hourly_ids": [
+        "USW00014753"
+      ],
+      "primary_hourly_id": "USW00014753"
+    },
+    {
+      "location_id": "USC00190120",
+      "code": null,
+      "name": "AMHERST",
+      "state": "MA",
+      "lat": 42.3861,
+      "lon": -72.5375,
+      "daily_ids": [
+        "USC00190120"
+      ],
+      "primary_daily_id": "USC00190120",
+      "hourly_ids": [
+        "USC00190120"
+      ],
+      "primary_hourly_id": "USC00190120"
+    },
+    {
+      "location_id": "USC00192451",
+      "code": null,
+      "name": "E WAREHAM",
+      "state": "MA",
+      "lat": 41.7653,
+      "lon": -70.6697,
+      "daily_ids": [
+        "USC00192451"
+      ],
+      "primary_daily_id": "USC00192451",
+      "hourly_ids": [
+        "USC00192451"
+      ],
+      "primary_hourly_id": "USC00192451"
+    },
+    {
+      "location_id": "USC00193821",
+      "code": null,
+      "name": "HYANNIS",
+      "state": "MA",
+      "lat": 41.665,
+      "lon": -70.3039,
+      "daily_ids": [
+        "USC00193821"
+      ],
+      "primary_daily_id": "USC00193821",
+      "hourly_ids": [
+        "USC00193821"
+      ],
+      "primary_hourly_id": "USC00193821"
+    },
+    {
+      "location_id": "USC00193624",
+      "code": null,
+      "name": "HINGHAM",
+      "state": "MA",
+      "lat": 42.2269,
+      "lon": -70.9125,
+      "daily_ids": [
+        "USC00193624"
+      ],
+      "primary_daily_id": "USC00193624",
+      "hourly_ids": [
+        "USC00193624"
+      ],
+      "primary_hourly_id": "USC00193624"
+    },
+    {
+      "location_id": "USC00194711",
+      "code": null,
+      "name": "MIDDLEBORO",
+      "state": "MA",
+      "lat": 41.8819,
+      "lon": -70.9086,
+      "daily_ids": [
+        "USC00194711"
+      ],
+      "primary_daily_id": "USC00194711",
+      "hourly_ids": [
+        "USC00194711"
+      ],
+      "primary_hourly_id": "USC00194711"
+    },
+    {
+      "location_id": "USC00194105",
+      "code": null,
+      "name": "LAWRENCE",
+      "state": "MA",
+      "lat": 42.6992,
+      "lon": -71.1658,
+      "daily_ids": [
+        "USC00194105"
+      ],
+      "primary_daily_id": "USC00194105",
+      "hourly_ids": [
+        "USC00194105"
+      ],
+      "primary_hourly_id": "USC00194105"
+    },
+    {
+      "location_id": "USC00198757",
+      "code": null,
+      "name": "WALPOLE 2",
+      "state": "MA",
+      "lat": 42.1608,
+      "lon": -71.2461,
+      "daily_ids": [
+        "USC00198757"
+      ],
+      "primary_daily_id": "USC00198757",
+      "hourly_ids": [
+        "USC00198757"
+      ],
+      "primary_hourly_id": "USC00198757"
+    },
+    {
+      "location_id": "USC00190562",
+      "code": null,
+      "name": "BELCHERTOWN",
+      "state": "MA",
+      "lat": 42.2797,
+      "lon": -72.3483,
+      "daily_ids": [
+        "USC00190562"
+      ],
+      "primary_daily_id": "USC00190562",
+      "hourly_ids": [
+        "USC00190562"
+      ],
+      "primary_hourly_id": "USC00190562"
+    },
+    {
+      "location_id": "USC00190190",
+      "code": null,
+      "name": "ASHBURNHAM",
+      "state": "MA",
+      "lat": 42.6178,
+      "lon": -71.9158,
+      "daily_ids": [
+        "USC00190190"
+      ],
+      "primary_daily_id": "USC00190190",
+      "hourly_ids": [
+        "USC00190190"
+      ],
+      "primary_hourly_id": "USC00190190"
+    },
+    {
+      "location_id": "USC00068138",
+      "code": null,
+      "name": "STORRS",
+      "state": "CT",
+      "lat": 41.795,
+      "lon": -72.2286,
+      "daily_ids": [
+        "USC00068138"
+      ],
+      "primary_daily_id": "USC00068138",
+      "hourly_ids": [
+        "USC00068138"
+      ],
+      "primary_hourly_id": "USC00068138"
+    },
+    {
+      "location_id": "USC00065445",
+      "code": null,
+      "name": "NORFOLK 2 SW",
+      "state": "CT",
+      "lat": 41.9725,
+      "lon": -73.2208,
+      "daily_ids": [
+        "USC00065445"
+      ],
+      "primary_daily_id": "USC00065445",
+      "hourly_ids": [
+        "USC00065445"
+      ],
+      "primary_hourly_id": "USC00065445"
+    },
+    {
+      "location_id": "USC00063207",
+      "code": null,
+      "name": "GROTON",
+      "state": "CT",
+      "lat": 41.3503,
+      "lon": -72.0378,
+      "daily_ids": [
+        "USC00063207"
+      ],
+      "primary_daily_id": "USC00063207",
+      "hourly_ids": [
+        "USC00063207"
+      ],
+      "primary_hourly_id": "USC00063207"
+    },
+    {
+      "location_id": "USC00065910",
+      "code": null,
+      "name": "NORWICH PUBLIC UTILITY PLT",
+      "state": "CT",
+      "lat": 41.5267,
+      "lon": -72.0653,
+      "daily_ids": [
+        "USC00065910"
+      ],
+      "primary_daily_id": "USC00065910",
+      "hourly_ids": [
+        "USC00065910"
+      ],
+      "primary_hourly_id": "USC00065910"
+    },
+    {
+      "location_id": "USC00374266",
+      "code": null,
+      "name": "KINGSTON",
+      "state": "RI",
+      "lat": 41.4903,
+      "lon": -71.5431,
+      "daily_ids": [
+        "USC00374266"
+      ],
+      "primary_daily_id": "USC00374266",
+      "hourly_ids": [
+        "USC00374266"
+      ],
+      "primary_hourly_id": "USC00374266"
+    },
+    {
+      "location_id": "USC00375270",
+      "code": null,
+      "name": "N FOSTER 1 E",
+      "state": "RI",
+      "lat": 41.8564,
+      "lon": -71.7333,
+      "daily_ids": [
+        "USC00375270"
+      ],
+      "primary_daily_id": "USC00375270",
+      "hourly_ids": [
+        "USC00375270"
+      ],
+      "primary_hourly_id": "USC00375270"
+    },
+    {
+      "location_id": "USC00272174",
+      "code": null,
+      "name": "DURHAM",
+      "state": "NH",
+      "lat": 43.1419,
+      "lon": -70.95,
+      "daily_ids": [
+        "USC00272174"
+      ],
+      "primary_daily_id": "USC00272174",
+      "hourly_ids": [
+        "USC00272174"
+      ],
+      "primary_hourly_id": "USC00272174"
+    },
+    {
+      "location_id": "USC00273850",
+      "code": null,
+      "name": "HANOVER",
+      "state": "NH",
+      "lat": 43.7052,
+      "lon": -72.2855,
+      "daily_ids": [
+        "USC00273850"
+      ],
+      "primary_daily_id": "USC00273850",
+      "hourly_ids": [
+        "USC00273850"
+      ],
+      "primary_hourly_id": "USC00273850"
+    },
+    {
+      "location_id": "USC00274399",
+      "code": null,
+      "name": "KEENE",
+      "state": "NH",
+      "lat": 42.9389,
+      "lon": -72.3247,
+      "daily_ids": [
+        "USC00274399"
+      ],
+      "primary_daily_id": "USC00274399",
+      "hourly_ids": [
+        "USC00274399"
+      ],
+      "primary_hourly_id": "USC00274399"
+    },
+    {
+      "location_id": "USC00437054",
+      "code": null,
+      "name": "SAINT JOHNSBURY",
+      "state": "VT",
+      "lat": 44.42,
+      "lon": -72.0194,
+      "daily_ids": [
+        "USC00437054"
+      ],
+      "primary_daily_id": "USC00437054",
+      "hourly_ids": [
+        "USC00437054",
+        "USW00054742"
+      ],
+      "primary_hourly_id": "USW00054742"
+    },
+    {
+      "location_id": "USC00431580",
+      "code": null,
+      "name": "CORNWALL",
+      "state": "VT",
+      "lat": 43.9572,
+      "lon": -73.2106,
+      "daily_ids": [
+        "USC00431580"
+      ],
+      "primary_daily_id": "USC00431580",
+      "hourly_ids": [
+        "USC00431580"
+      ],
+      "primary_hourly_id": "USC00431580"
+    },
+    {
+      "location_id": "USC00437612",
+      "code": null,
+      "name": "S LINCOLN",
+      "state": "VT",
+      "lat": 44.0725,
+      "lon": -72.9736,
+      "daily_ids": [
+        "USC00437612"
+      ],
+      "primary_daily_id": "USC00437612",
+      "hourly_ids": [
+        "USC00437612"
+      ],
+      "primary_hourly_id": "USC00437612"
+    },
+    {
+      "location_id": "USC00172765",
+      "code": null,
+      "name": "FARMINGTON",
+      "state": "ME",
+      "lat": 44.6986,
+      "lon": -70.1619,
+      "daily_ids": [
+        "USC00172765"
+      ],
+      "primary_daily_id": "USC00172765",
+      "hourly_ids": [
+        "USC00172765"
+      ],
+      "primary_hourly_id": "USC00172765"
+    },
+    {
+      "location_id": "USC00173046",
+      "code": null,
+      "name": "GARDINER",
+      "state": "ME",
+      "lat": 44.2203,
+      "lon": -69.7889,
+      "daily_ids": [
+        "USC00173046"
+      ],
+      "primary_daily_id": "USC00173046",
+      "hourly_ids": [
+        "USC00173046"
+      ],
+      "primary_hourly_id": "USC00173046"
+    },
+    {
+      "location_id": "USC00171628",
+      "code": null,
+      "name": "CORINNA",
+      "state": "ME",
+      "lat": 44.9197,
+      "lon": -69.2417,
+      "daily_ids": [
+        "USC00171628"
+      ],
+      "primary_daily_id": "USC00171628",
+      "hourly_ids": [
+        "USC00171628"
+      ],
+      "primary_hourly_id": "USC00171628"
+    },
+    {
+      "location_id": "USC00300889",
+      "code": null,
+      "name": "BRIDGEHAMPTON",
+      "state": "NY",
+      "lat": 40.9519,
+      "lon": -72.2978,
+      "daily_ids": [
+        "USC00300889"
+      ],
+      "primary_daily_id": "USC00300889",
+      "hourly_ids": [
+        "USC00300889"
+      ],
+      "primary_hourly_id": "USC00300889"
+    },
+    {
+      "location_id": "USC00305426",
+      "code": null,
+      "name": "MOHONK LAKE",
+      "state": "NY",
+      "lat": 41.772,
+      "lon": -74.1537,
+      "daily_ids": [
+        "USC00305426"
+      ],
+      "primary_daily_id": "USC00305426",
+      "hourly_ids": [
+        "USC00305426"
+      ],
+      "primary_hourly_id": "USC00305426"
+    },
+    {
+      "location_id": "USC00307484",
+      "code": null,
+      "name": "SARATOGA SPRINGS 4 SW",
+      "state": "NY",
+      "lat": 43.0414,
+      "lon": -73.8214,
+      "daily_ids": [
+        "USC00307484"
+      ],
+      "primary_daily_id": "USC00307484",
+      "hourly_ids": [
+        "USC00307484"
+      ],
+      "primary_hourly_id": "USC00307484"
+    },
+    {
+      "location_id": "USW00014755",
+      "code": null,
+      "name": "MT WASHINGTON",
+      "state": "NH",
+      "lat": 44.2703,
+      "lon": -71.3033,
+      "daily_ids": [
+        "USW00014755"
+      ],
+      "primary_daily_id": "USW00014755",
+      "hourly_ids": [
+        "USW00014755"
+      ],
+      "primary_hourly_id": "USW00014755"
+    },
+    {
+      "location_id": "USC00276818",
+      "code": null,
+      "name": "PINKHAM NOTCH",
+      "state": "NH",
+      "lat": 44.258,
+      "lon": -71.2525,
+      "daily_ids": [
+        "USC00276818"
+      ],
+      "primary_daily_id": "USC00276818",
+      "hourly_ids": [
+        "USC00276818"
+      ],
+      "primary_hourly_id": "USC00276818"
+    },
+    {
+      "location_id": "USC00191386",
+      "code": null,
+      "name": "CHATHAM",
+      "state": "MA",
+      "lat": 41.6569,
+      "lon": -69.9592,
+      "daily_ids": [
+        "USC00191386"
+      ],
+      "primary_daily_id": "USC00191386",
+      "hourly_ids": [
+        "USC00191386"
+      ],
+      "primary_hourly_id": "USC00191386"
+    },
+    {
+      "location_id": "USW00004724",
+      "code": null,
+      "name": "NIAGARA FALLS INTL AP",
+      "state": "NY",
+      "lat": 43.1083,
+      "lon": -78.9381,
+      "daily_ids": [
+        "USW00004724"
+      ],
+      "primary_daily_id": "USW00004724",
+      "hourly_ids": [
+        "USW00004724"
+      ],
+      "primary_hourly_id": "USW00004724"
+    },
+    {
+      "location_id": "USW00004725",
+      "code": null,
+      "name": "BINGHAMTON",
+      "state": "NY",
+      "lat": 42.1997,
+      "lon": -75.9847,
+      "daily_ids": [
+        "USW00004725"
+      ],
+      "primary_daily_id": "USW00004725",
+      "hourly_ids": [
+        "USW00004725"
+      ],
+      "primary_hourly_id": "USW00004725"
+    },
+    {
+      "location_id": "USW00004742",
+      "code": null,
+      "name": "PLATTSBURGH INTL AP",
+      "state": "NY",
+      "lat": 44.65,
+      "lon": -73.4667,
+      "daily_ids": [
+        "USW00004742"
+      ],
+      "primary_daily_id": "USW00004742",
+      "hourly_ids": [
+        "USW00004742"
+      ],
+      "primary_hourly_id": "USW00004742"
+    },
+    {
+      "location_id": "USW00004781",
+      "code": null,
+      "name": "ISLIP-LI MACARTHUR AP",
+      "state": "NY",
+      "lat": 40.7939,
+      "lon": -73.1019,
+      "daily_ids": [
+        "USW00004781"
+      ],
+      "primary_daily_id": "USW00004781",
+      "hourly_ids": [
+        "USW00004781"
+      ],
+      "primary_hourly_id": "USW00004781"
+    },
+    {
+      "location_id": "USW00013724",
+      "code": null,
+      "name": "ATLANTIC CITY MARINA",
+      "state": "NJ",
+      "lat": 39.3778,
+      "lon": -74.4236,
+      "daily_ids": [
+        "USW00013724"
+      ],
+      "primary_daily_id": "USW00013724",
+      "hourly_ids": [
+        "USW00013724"
+      ],
+      "primary_hourly_id": "USW00013724"
+    },
+    {
+      "location_id": "USW00013735",
+      "code": null,
+      "name": "MILLVILLE MUNI AP",
+      "state": "NJ",
+      "lat": 39.3661,
+      "lon": -75.0778,
+      "daily_ids": [
+        "USW00013735"
+      ],
+      "primary_daily_id": "USW00013735",
+      "hourly_ids": [
+        "USW00013735"
+      ],
+      "primary_hourly_id": "USW00013735"
+    },
+    {
+      "location_id": "USW00014604",
+      "code": null,
+      "name": "PRESQUE ISLE MUNI AP",
+      "state": "ME",
+      "lat": 46.6833,
+      "lon": -68.05,
+      "daily_ids": [
+        "USW00014604"
+      ],
+      "primary_daily_id": "USW00014604",
+      "hourly_ids": [
+        "USW00014604"
+      ],
+      "primary_hourly_id": "USW00014604"
+    },
+    {
+      "location_id": "USW00014606",
+      "code": null,
+      "name": "BANGOR INTL AP",
+      "state": "ME",
+      "lat": 44.7978,
+      "lon": -68.8186,
+      "daily_ids": [
+        "USW00014606"
+      ],
+      "primary_daily_id": "USW00014606",
+      "hourly_ids": [
+        "USW00014606"
+      ],
+      "primary_hourly_id": "USW00014606"
+    },
+    {
+      "location_id": "USW00014607",
+      "code": null,
+      "name": "CARIBOU WFO",
+      "state": "ME",
+      "lat": 46.8706,
+      "lon": -68.0172,
+      "daily_ids": [
+        "USW00014607"
+      ],
+      "primary_daily_id": "USW00014607",
+      "hourly_ids": [
+        "USW00014607"
+      ],
+      "primary_hourly_id": "USW00014607"
+    },
+    {
+      "location_id": "USW00014609",
+      "code": null,
+      "name": "HOULTON AP",
+      "state": "ME",
+      "lat": 46.1183,
+      "lon": -67.7928,
+      "daily_ids": [
+        "USW00014609"
+      ],
+      "primary_daily_id": "USW00014609",
+      "hourly_ids": [
+        "USW00014609"
+      ],
+      "primary_hourly_id": "USW00014609"
+    },
+    {
+      "location_id": "USW00014610",
+      "code": null,
+      "name": "MILLINOCKET MUNI AP",
+      "state": "ME",
+      "lat": 45.6478,
+      "lon": -68.6925,
+      "daily_ids": [
+        "USW00014610"
+      ],
+      "primary_daily_id": "USW00014610",
+      "hourly_ids": [
+        "USW00014610"
+      ],
+      "primary_hourly_id": "USW00014610"
+    },
+    {
+      "location_id": "USW00014702",
+      "code": null,
+      "name": "BEDFORD HANSCOM FLD",
+      "state": "MA",
+      "lat": 42.4681,
+      "lon": -71.2947,
+      "daily_ids": [
+        "USW00014702"
+      ],
+      "primary_daily_id": "USW00014702",
+      "hourly_ids": [
+        "USW00014702"
+      ],
+      "primary_hourly_id": "USW00014702"
+    },
+    {
+      "location_id": "USW00014719",
+      "code": null,
+      "name": "WESTHAMPTON GABRESKI AP",
+      "state": "NY",
+      "lat": 40.8506,
+      "lon": -72.6192,
+      "daily_ids": [
+        "USW00014719"
+      ],
+      "primary_daily_id": "USW00014719",
+      "hourly_ids": [
+        "USW00014719"
+      ],
+      "primary_hourly_id": "USW00014719"
+    },
+    {
+      "location_id": "USW00014732",
+      "code": null,
+      "name": "LAGUARDIA AP",
+      "state": "NY",
+      "lat": 40.7794,
+      "lon": -73.8803,
+      "daily_ids": [
+        "USW00014732"
+      ],
+      "primary_daily_id": "USW00014732",
+      "hourly_ids": [
+        "USW00014732"
+      ],
+      "primary_hourly_id": "USW00014732"
+    },
+    {
+      "location_id": "USW00014733",
+      "code": null,
+      "name": "BUFFALO",
+      "state": "NY",
+      "lat": 42.9489,
+      "lon": -78.7367,
+      "daily_ids": [
+        "USW00014733"
+      ],
+      "primary_daily_id": "USW00014733",
+      "hourly_ids": [
+        "USW00014733"
+      ],
+      "primary_hourly_id": "USW00014733"
+    },
+    {
+      "location_id": "USW00014734",
+      "code": null,
+      "name": "NEWARK LIBERTY INTL AP",
+      "state": "NJ",
+      "lat": 40.6828,
+      "lon": -74.1692,
+      "daily_ids": [
+        "USW00014734"
+      ],
+      "primary_daily_id": "USW00014734",
+      "hourly_ids": [
+        "USW00014734"
+      ],
+      "primary_hourly_id": "USW00014734"
+    },
+    {
+      "location_id": "USW00014743",
+      "code": null,
+      "name": "CANTON 4 SE",
+      "state": "NY",
+      "lat": 44.5833,
+      "lon": -75.1167,
+      "daily_ids": [
+        "USW00014743"
+      ],
+      "primary_daily_id": "USW00014743",
+      "hourly_ids": [
+        "USW00014743"
+      ],
+      "primary_hourly_id": "USW00014743"
+    },
+    {
+      "location_id": "USW00014747",
+      "code": null,
+      "name": "DUNKIRK CHAUTAUQUA CO AP",
+      "state": "NY",
+      "lat": 42.4933,
+      "lon": -79.2761,
+      "daily_ids": [
+        "USW00014747"
+      ],
+      "primary_daily_id": "USW00014747",
+      "hourly_ids": [
+        "USW00014747"
+      ],
+      "primary_hourly_id": "USW00014747"
+    },
+    {
+      "location_id": "USW00014748",
+      "code": null,
+      "name": "ELMIRA CORNING RGNL AP",
+      "state": "NY",
+      "lat": 42.1567,
+      "lon": -76.9028,
+      "daily_ids": [
+        "USW00014748"
+      ],
+      "primary_daily_id": "USW00014748",
+      "hourly_ids": [
+        "USW00014748"
+      ],
+      "primary_hourly_id": "USW00014748"
+    },
+    {
+      "location_id": "USW00014750",
+      "code": null,
+      "name": "GLENS FALLS AP",
+      "state": "NY",
+      "lat": 43.3386,
+      "lon": -73.6103,
+      "daily_ids": [
+        "USW00014750"
+      ],
+      "primary_daily_id": "USW00014750",
+      "hourly_ids": [
+        "USW00014750"
+      ],
+      "primary_hourly_id": "USW00014750"
+    },
+    {
+      "location_id": "USW00014752",
+      "code": null,
+      "name": "HARTFORD BRAINARD FLD",
+      "state": "CT",
+      "lat": 41.7353,
+      "lon": -72.6511,
+      "daily_ids": [
+        "USW00014752"
+      ],
+      "primary_daily_id": "USW00014752",
+      "hourly_ids": [
+        "USW00014752"
+      ],
+      "primary_hourly_id": "USW00014752"
+    },
+    {
+      "location_id": "USW00014757",
+      "code": null,
+      "name": "POUGHKEEPSIE AP",
+      "state": "NY",
+      "lat": 41.6258,
+      "lon": -73.8817,
+      "daily_ids": [
+        "USW00014757"
+      ],
+      "primary_daily_id": "USW00014757",
+      "hourly_ids": [
+        "USW00014757"
+      ],
+      "primary_hourly_id": "USW00014757"
+    },
+    {
+      "location_id": "USW00014768",
+      "code": null,
+      "name": "ROCHESTER GTR INTL",
+      "state": "NY",
+      "lat": 43.1172,
+      "lon": -77.6753,
+      "daily_ids": [
+        "USW00014768"
+      ],
+      "primary_daily_id": "USW00014768",
+      "hourly_ids": [
+        "USW00014768"
+      ],
+      "primary_hourly_id": "USW00014768"
+    },
+    {
+      "location_id": "USW00014771",
+      "code": null,
+      "name": "SYRACUSE HANCOCK INTL AP",
+      "state": "NY",
+      "lat": 43.1111,
+      "lon": -76.1039,
+      "daily_ids": [
+        "USW00014771"
+      ],
+      "primary_daily_id": "USW00014771",
+      "hourly_ids": [
+        "USW00014771"
+      ],
+      "primary_hourly_id": "USW00014771"
+    },
+    {
+      "location_id": "USW00014792",
+      "code": null,
+      "name": "TRENTON-MERCER AP",
+      "state": "NJ",
+      "lat": 40.2769,
+      "lon": -74.8158,
+      "daily_ids": [
+        "USW00014792"
+      ],
+      "primary_daily_id": "USW00014792",
+      "hourly_ids": [
+        "USW00014792"
+      ],
+      "primary_hourly_id": "USW00014792"
+    },
+    {
+      "location_id": "USW00093730",
+      "code": null,
+      "name": "ATLANTIC CITY INTL AP",
+      "state": "NJ",
+      "lat": 39.4519,
+      "lon": -74.5669,
+      "daily_ids": [
+        "USW00093730"
+      ],
+      "primary_daily_id": "USW00093730",
+      "hourly_ids": [
+        "USW00093730"
+      ],
+      "primary_hourly_id": "USW00093730"
+    },
+    {
+      "location_id": "USW00094704",
+      "code": null,
+      "name": "DANSVILLE MUNI AP",
+      "state": "NY",
+      "lat": 42.5697,
+      "lon": -77.7142,
+      "daily_ids": [
+        "USW00094704"
+      ],
+      "primary_daily_id": "USW00094704",
+      "hourly_ids": [
+        "USW00094704"
+      ],
+      "primary_hourly_id": "USW00094704"
+    },
+    {
+      "location_id": "USW00094725",
+      "code": null,
+      "name": "MASSENA INTL AP",
+      "state": "NY",
+      "lat": 44.9333,
+      "lon": -74.8483,
+      "daily_ids": [
+        "USW00094725"
+      ],
+      "primary_daily_id": "USW00094725",
+      "hourly_ids": [
+        "USW00094725"
+      ],
+      "primary_hourly_id": "USW00094725"
+    },
+    {
+      "location_id": "USW00094728",
+      "code": null,
+      "name": "NY CITY CNTRL PARK",
+      "state": "NY",
+      "lat": 40.7789,
+      "lon": -73.9692,
+      "daily_ids": [
+        "USW00094728"
+      ],
+      "primary_daily_id": "USW00094728",
+      "hourly_ids": [
+        "USW00094728"
+      ],
+      "primary_hourly_id": "USW00094728"
+    },
+    {
+      "location_id": "USW00094741",
+      "code": null,
+      "name": "TETERBORO AP",
+      "state": "NJ",
+      "lat": 40.8589,
+      "lon": -74.0561,
+      "daily_ids": [
+        "USW00094741"
+      ],
+      "primary_daily_id": "USW00094741",
+      "hourly_ids": [
+        "USW00094741"
+      ],
+      "primary_hourly_id": "USW00094741"
+    },
+    {
+      "location_id": "USW00094745",
+      "code": null,
+      "name": "WESTCHESTER CO AP",
+      "state": "NY",
+      "lat": 41.0622,
+      "lon": -73.7044,
+      "daily_ids": [
+        "USW00094745"
+      ],
+      "primary_daily_id": "USW00094745",
+      "hourly_ids": [
+        "USW00094745"
+      ],
+      "primary_hourly_id": "USW00094745"
+    },
+    {
+      "location_id": "USW00094790",
+      "code": null,
+      "name": "WATERTOWN AP",
+      "state": "NY",
+      "lat": 43.9886,
+      "lon": -76.0261,
+      "daily_ids": [
+        "USW00094790"
+      ],
+      "primary_daily_id": "USW00094790",
+      "hourly_ids": [
+        "USW00094790"
+      ],
+      "primary_hourly_id": "USW00094790"
+    },
+    {
+      "location_id": "USW00094793",
+      "code": null,
+      "name": "BLOCK ISLAND STATE AP",
+      "state": "RI",
+      "lat": 41.1681,
+      "lon": -71.5778,
+      "daily_ids": [
+        "USW00094793"
+      ],
+      "primary_daily_id": "USW00094793",
+      "hourly_ids": [
+        "USW00094793"
+      ],
+      "primary_hourly_id": "USW00094793"
+    },
+    {
+      "location_id": "USW00014735",
+      "code": "ALB",
+      "name": "ALBANY INTL AP",
+      "state": "NY",
+      "lat": 42.7472,
+      "lon": -73.7992,
+      "daily_ids": [
+        "USW00014735"
+      ],
+      "primary_daily_id": "USW00014735",
+      "hourly_ids": [
+        "USW00014735"
+      ],
+      "primary_hourly_id": "USW00014735"
+    },
+    {
+      "location_id": "USW00014605",
+      "code": "AUG",
+      "name": "AUGUSTA STATE AP",
+      "state": "ME",
+      "lat": 44.3161,
+      "lon": -69.7969,
+      "daily_ids": [
+        "USW00014605"
+      ],
+      "primary_daily_id": "USW00014605",
+      "hourly_ids": [
+        "USW00014605"
+      ],
+      "primary_hourly_id": "USW00014605"
+    },
+    {
+      "location_id": "USW00014775",
+      "code": "BAF",
+      "name": "WESTFIELD BARNES MUNI AP",
+      "state": "MA",
+      "lat": 42.16,
+      "lon": -72.7125,
+      "daily_ids": [
+        "USW00014775"
+      ],
+      "primary_daily_id": "USW00014775",
+      "hourly_ids": [
+        "USW00014775"
+      ],
+      "primary_hourly_id": "USW00014775"
+    },
+    {
+      "location_id": "USW00014740",
+      "code": "BDL",
+      "name": "HARTFORD-BRADLEY INTL AP",
+      "state": "CT",
+      "lat": 41.9375,
+      "lon": -72.6819,
+      "daily_ids": [
+        "USW00014740"
+      ],
+      "primary_daily_id": "USW00014740",
+      "hourly_ids": [
+        "USW00014740"
+      ],
+      "primary_hourly_id": "USW00014740"
+    },
+    {
+      "location_id": "USW00014739",
+      "code": "BOS",
+      "name": "BOSTON",
+      "state": "MA",
+      "lat": 42.3606,
+      "lon": -71.0097,
+      "daily_ids": [
+        "USW00014739"
+      ],
+      "primary_daily_id": "USW00014739",
+      "hourly_ids": [
+        "USW00014739"
+      ],
+      "primary_hourly_id": "USW00014739"
+    },
+    {
+      "location_id": "USW00014742",
+      "code": "BTV",
+      "name": "BURLINGTON INTL AP",
+      "state": "VT",
+      "lat": 44.4683,
+      "lon": -73.15,
+      "daily_ids": [
+        "USW00014742"
+      ],
+      "primary_daily_id": "USW00014742",
+      "hourly_ids": [
+        "USW00014742"
+      ],
+      "primary_hourly_id": "USW00014742"
+    },
+    {
+      "location_id": "USW00054781",
+      "code": "DDH",
+      "name": "BENNINGTON MORSE STATE AP",
+      "state": "VT",
+      "lat": 42.8936,
+      "lon": -73.2489,
+      "daily_ids": [
+        "USW00054781"
+      ],
+      "primary_daily_id": "USW00054781",
+      "hourly_ids": [
+        "USW00054781"
+      ],
+      "primary_hourly_id": "USW00054781"
+    },
+    {
+      "location_id": "USW00094726",
+      "code": "EWB",
+      "name": "NEW BEDFORD MUNI AP",
+      "state": "MA",
+      "lat": 41.6792,
+      "lon": -70.9592,
+      "daily_ids": [
+        "USW00094726"
+      ],
+      "primary_daily_id": "USW00094726",
+      "hourly_ids": [
+        "USW00094726"
+      ],
+      "primary_hourly_id": "USW00094726"
+    },
+    {
+      "location_id": "USW00014758",
+      "code": "HVN",
+      "name": "NEW HAVEN TWEED AP",
+      "state": "CT",
+      "lat": 41.2589,
+      "lon": -72.8892,
+      "daily_ids": [
+        "USW00014758"
+      ],
+      "primary_daily_id": "USW00014758",
+      "hourly_ids": [
+        "USW00014758"
+      ],
+      "primary_hourly_id": "USW00014758"
+    },
+    {
+      "location_id": "USW00094720",
+      "code": "HYA",
+      "name": "HYANNIS BARNSTABLE MUNI AP",
+      "state": "MA",
+      "lat": 41.6719,
+      "lon": -70.2697,
+      "daily_ids": [
+        "USW00094720"
+      ],
+      "primary_daily_id": "USW00094720",
+      "hourly_ids": [
+        "USW00094720"
+      ],
+      "primary_hourly_id": "USW00094720"
+    },
+    {
+      "location_id": "USW00094789",
+      "code": "JFK",
+      "name": "JFK INTL AP",
+      "state": "NY",
+      "lat": 40.6392,
+      "lon": -73.7639,
+      "daily_ids": [
+        "USW00094789"
+      ],
+      "primary_daily_id": "USW00094789",
+      "hourly_ids": [
+        "USW00094789"
+      ],
+      "primary_hourly_id": "USW00094789"
+    },
+    {
+      "location_id": "USW00094765",
+      "code": "LEB",
+      "name": "LEBANON MUNI AP",
+      "state": "NH",
+      "lat": 43.6269,
+      "lon": -72.3053,
+      "daily_ids": [
+        "USW00094765"
+      ],
+      "primary_daily_id": "USW00094765",
+      "hourly_ids": [
+        "USW00094765"
+      ],
+      "primary_hourly_id": "USW00094765"
+    },
+    {
+      "location_id": "USW00014710",
+      "code": "MHT",
+      "name": "MANCHESTER AP",
+      "state": "NH",
+      "lat": 42.9297,
+      "lon": -71.4356,
+      "daily_ids": [
+        "USW00014710"
+      ],
+      "primary_daily_id": "USW00014710",
+      "hourly_ids": [
+        "USW00014710"
+      ],
+      "primary_hourly_id": "USW00014710"
+    },
+    {
+      "location_id": "USW00094724",
+      "code": "MVY",
+      "name": "VINEYARD HAVEN MARTHAS VINEYAR",
+      "state": "MA",
+      "lat": 41.3931,
+      "lon": -70.6158,
+      "daily_ids": [
+        "USW00094724"
+      ],
+      "primary_daily_id": "USW00094724",
+      "hourly_ids": [
+        "USW00094724"
+      ],
+      "primary_hourly_id": "USW00094724"
+    },
+    {
+      "location_id": "USW00094746",
+      "code": "ORH",
+      "name": "WORCESTER",
+      "state": "MA",
+      "lat": 42.2706,
+      "lon": -71.8731,
+      "daily_ids": [
+        "USW00094746"
+      ],
+      "primary_daily_id": "USW00094746",
+      "hourly_ids": [
+        "USW00094746"
+      ],
+      "primary_hourly_id": "USW00094746"
+    },
+    {
+      "location_id": "USW00064708",
+      "code": "PVC",
+      "name": "PROVINCETOWN MUNI AP",
+      "state": "MA",
+      "lat": 42.0719,
+      "lon": -70.2211,
+      "daily_ids": [
+        "USW00064708"
+      ],
+      "primary_daily_id": "USW00064708",
+      "hourly_ids": [
+        "USW00064708"
+      ],
+      "primary_hourly_id": "USW00064708"
+    },
+    {
+      "location_id": "USW00014765",
+      "code": "PVD",
+      "name": "PROVIDENCE",
+      "state": "RI",
+      "lat": 41.7225,
+      "lon": -71.4325,
+      "daily_ids": [
+        "USW00014765"
+      ],
+      "primary_daily_id": "USW00014765",
+      "hourly_ids": [
+        "USW00014765"
+      ],
+      "primary_hourly_id": "USW00014765"
+    },
+    {
+      "location_id": "USW00014764",
+      "code": "PWM",
+      "name": "PORTLAND JETPORT",
+      "state": "ME",
+      "lat": 43.6425,
+      "lon": -70.3045,
+      "daily_ids": [
+        "USW00014764"
+      ],
+      "primary_daily_id": "USW00014764",
+      "hourly_ids": [
+        "USW00014764"
+      ],
+      "primary_hourly_id": "USW00014764"
+    },
+    {
+      "location_id": "USW00054769",
+      "code": "PYM",
+      "name": "PLYMOUTH MUNI AP",
+      "state": "MA",
+      "lat": 41.9086,
+      "lon": -70.7278,
+      "daily_ids": [
+        "USW00054769"
+      ],
+      "primary_daily_id": "USW00054769",
+      "hourly_ids": [
+        "USW00054769"
+      ],
+      "primary_hourly_id": "USW00054769"
+    },
+    {
+      "location_id": "USW00014787",
+      "code": "UUU",
+      "name": "NEWPORT STATE AP",
+      "state": "RI",
+      "lat": 41.53,
+      "lon": -71.2833,
+      "daily_ids": [
+        "USW00014787"
+      ],
+      "primary_daily_id": "USW00014787",
+      "hourly_ids": [
+        "USW00014787"
+      ],
+      "primary_hourly_id": "USW00014787"
+    },
+    {
+      "location_id": "USW00014745",
+      "code": "CON",
+      "name": "CONCORD ASOS",
+      "state": "NH",
+      "lat": 43.205,
+      "lon": -71.5025,
+      "daily_ids": [
+        "USW00014745"
+      ],
+      "primary_daily_id": "USW00014745",
+      "hourly_ids": [
+        "USW00014745"
+      ],
+      "primary_hourly_id": "USW00014745"
+    },
+    {
+      "location_id": "USW00094702",
+      "code": "BDR",
+      "name": "IGOR I SIKORSKY MEM AP",
+      "state": "CT",
+      "lat": 41.1642,
+      "lon": -73.1267,
+      "daily_ids": [
+        "USW00094702"
+      ],
+      "primary_daily_id": "USW00094702",
+      "hourly_ids": [
+        "USW00094702"
+      ],
+      "primary_hourly_id": "USW00094702"
+    },
+    {
+      "location_id": "USW00094705",
+      "code": "MPV",
+      "name": "MONTPELIER AP",
+      "state": "VT",
+      "lat": 44.205,
+      "lon": -72.5656,
+      "daily_ids": [
+        "USW00094705"
+      ],
+      "primary_daily_id": "USW00094705",
+      "hourly_ids": [
+        "USW00094705"
+      ],
+      "primary_hourly_id": "USW00094705"
+    },
+    {
+      "location_id": "USW00014756",
+      "code": "ACK",
+      "name": "NANTUCKET MEM AP",
+      "state": "MA",
+      "lat": 41.2542,
+      "lon": -70.0589,
+      "daily_ids": [
+        "USW00014756"
+      ],
+      "primary_daily_id": "USW00014756",
+      "hourly_ids": [
+        "USW00014756"
+      ],
+      "primary_hourly_id": "USW00014756"
+    },
+    {
+      "location_id": "USW00014763",
+      "code": "PSF",
+      "name": "PITTSFIELD MUNI AP",
+      "state": "MA",
+      "lat": 42.4269,
+      "lon": -73.2892,
+      "daily_ids": [
+        "USW00014763"
+      ],
+      "primary_daily_id": "USW00014763",
+      "hourly_ids": [
+        "USW00014763"
+      ],
+      "primary_hourly_id": "USW00014763"
+    },
+    {
+      "location_id": "USW00054768",
+      "code": "AQW",
+      "name": "N ADAMS HARRIMAN AP",
+      "state": "MA",
+      "lat": 42.6972,
+      "lon": -73.1697,
+      "daily_ids": [
+        "USW00054768"
+      ],
+      "primary_daily_id": "USW00054768",
+      "hourly_ids": [
+        "USW00054768"
+      ],
+      "primary_hourly_id": "USW00054768"
+    },
+    {
+      "location_id": "USW00054740",
+      "code": "VSF",
+      "name": "SPRINGFIELD HARTNESS STATE AP",
+      "state": "VT",
+      "lat": 43.3422,
+      "lon": -72.5214,
+      "daily_ids": [
+        "USW00054740"
+      ],
+      "primary_daily_id": "USW00054740",
+      "hourly_ids": [
+        "USW00054740"
+      ],
+      "primary_hourly_id": "USW00054740"
+    },
+    {
+      "location_id": "USW00094721",
+      "code": "EEN",
+      "name": "KEENE DILLNT-HOPKNS AP",
+      "state": "NH",
+      "lat": 42.9,
+      "lon": -72.2667,
+      "daily_ids": [
+        "USW00094721"
+      ],
+      "primary_daily_id": "USW00094721",
+      "hourly_ids": [
+        "USW00094721"
+      ],
+      "primary_hourly_id": "USW00094721"
+    },
+    {
+      "location_id": "USW00004743",
+      "code": "PSM",
+      "name": "PORTSMOUTH PEASE AFB",
+      "state": "NH",
+      "lat": 43.0833,
+      "lon": -70.8167,
+      "daily_ids": [
+        "USW00004743"
+      ],
+      "primary_daily_id": "USW00004743",
+      "hourly_ids": [
+        "USW00004743"
+      ],
+      "primary_hourly_id": "USW00004743"
+    },
+    {
+      "location_id": "USW00014707",
+      "code": "GON",
+      "name": "GROTON NEW LONDON AP",
+      "state": "CT",
+      "lat": 41.3281,
+      "lon": -72.0489,
+      "daily_ids": [
+        "USW00014707"
+      ],
+      "primary_daily_id": "USW00014707",
+      "hourly_ids": [
+        "USW00014707"
+      ],
+      "primary_hourly_id": "USW00014707"
+    }
+  ]
+}

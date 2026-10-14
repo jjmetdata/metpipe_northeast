@@ -28,6 +28,7 @@ docs/aws/*.pdf
 outputs/
 *.png
 *.svg
+!docs/assets/station_network.svg
 
 # Logs and coverage
 *.log

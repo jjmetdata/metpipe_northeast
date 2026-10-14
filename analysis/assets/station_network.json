@@ -1,0 +1,25 @@
+{
+  "coordinate_source": "Newest local NOAA LCDv1 CSV with coordinates, 2023–2024; extracted October 13, 2026. Coordinates represent the modern network, not homogenized historical site locations.",
+  "stations": [
+    {"code":"ALB","name":"ALBANY INTERNATIONAL AIRPORT, NY US","latitude":42.74722,"longitude":-73.79913},
+    {"code":"AUG","name":"AUGUSTA STATE AIRPORT, ME US","latitude":44.3161,"longitude":-69.79702},
+    {"code":"BAF","name":"WESTFIELD BARNES REGIONAL AIRPORT, MA US","latitude":42.16005,"longitude":-72.71246},
+    {"code":"BDL","name":"HARTFORD BRADLEY INTERNATIONAL AIRPORT, CT US","latitude":41.93742,"longitude":-72.68202},
+    {"code":"BOS","name":"BOSTON LOGAN INTERNATIONAL AIRPORT, MA US","latitude":42.36057,"longitude":-71.00975},
+    {"code":"BTV","name":"BURLINGTON INTERNATIONAL AIRPORT, VT US","latitude":44.46825,"longitude":-73.1499},
+    {"code":"DDH","name":"BENNINGTON WILLIAM H. MORSE STATE AIRPORT, VT US","latitude":42.8935,"longitude":-73.24875},
+    {"code":"EWB","name":"NEW BEDFORD MUNICIPAL AIRPORT, MA US","latitude":41.67908,"longitude":-70.95911},
+    {"code":"HVN","name":"NEW HAVEN TWEED AIRPORT, CT US","latitude":41.259,"longitude":-72.88911},
+    {"code":"HYA","name":"HYANNIS BARNSTABLE MUNICIPAL AIRPORT, MA US","latitude":41.6719,"longitude":-70.26972},
+    {"code":"JFK","name":"JFK INTERNATIONAL AIRPORT, NY US","latitude":40.63915,"longitude":-73.7639},
+    {"code":"LEB","name":"LEBANON MUNICIPAL AIRPORT, NH US","latitude":43.62707,"longitude":-72.30537},
+    {"code":"MHT","name":"MANCHESTER AIRPORT, NH US","latitude":42.92963,"longitude":-71.43559},
+    {"code":"MVY","name":"VINEYARD HAVEN MARTHAS VINEYARD AIRPORT, MA US","latitude":41.39296,"longitude":-70.61592},
+    {"code":"ORH","name":"WORCESTER REGIONAL AIRPORT, MA US","latitude":42.2706,"longitude":-71.8731},
+    {"code":"PVC","name":"PROVINCETOWN MUNICIPAL AIRPORT, MA US","latitude":42.07194,"longitude":-70.22111},
+    {"code":"PVD","name":"RHODE ISLAND T.F. GREEN INTERNATIONAL AIRPORT, RI US","latitude":41.72252,"longitude":-71.43248},
+    {"code":"PWM","name":"PORTLAND JETPORT, ME US","latitude":43.64244,"longitude":-70.30443},
+    {"code":"PYM","name":"PLYMOUTH MUNICIPAL AIRPORT, MA US","latitude":41.90851,"longitude":-70.72785},
+    {"code":"UUU","name":"NEWPORT STATE AIRPORT, RI US","latitude":41.52991,"longitude":-71.28331}
+  ]
+}
