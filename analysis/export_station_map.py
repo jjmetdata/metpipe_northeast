@@ -52,7 +52,7 @@ def build_svg():
     {''.join(markers)}
   </g>
   <circle cx="30" cy="923" r="7" fill="#2784b9" stroke="#17324d" stroke-width="2"/>
-  <text x="47" y="928" style="font-size:15px">Core network · Missing hours/elements remain missing</text>
+  <text x="47" y="928" style="font-size:15px">Core network</text>
   <text x="1074" y="928" text-anchor="end" style="font-size:13px;fill:#547080">Coordinates: NOAA · Boundaries: Natural Earth (public domain)</text>
 </svg>'''
 
