@@ -10,6 +10,7 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.ipynb_checkpoints/
 .venv/
 venv/
 
@@ -29,6 +30,8 @@ outputs/
 *.png
 *.svg
 !docs/assets/station_network.svg
+!docs/assets/data_availability.png
+!docs/assets/pressure_availability_by_year.png
 
 # Logs and coverage
 *.log

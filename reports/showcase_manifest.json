@@ -1,0 +1,38 @@
+{
+  "export_date": "2026-10-15",
+  "upstream": "jjmetdata/metpipe_northeast",
+  "input_policy": "observed_2005_2024_v1",
+  "audit_date": "2026-10-14",
+  "expected_station_hours": 3506400,
+  "core_stations": 20,
+  "artifacts": [
+    {
+      "source": "outputs/audits/finalized_availability/core_station_summary.csv",
+      "source_sha256": "0fb11256c89a9486c6ccbbb6de72ad35ee4f7567892de1024681d379a4d3bb30",
+      "export": "reports/data_availability.csv",
+      "export_sha256": "0fb11256c89a9486c6ccbbb6de72ad35ee4f7567892de1024681d379a4d3bb30"
+    },
+    {
+      "source": "outputs/audits/finalized_availability/core_station_year_availability.csv",
+      "source_sha256": "ae32623409e8cccdd8c57831487cc62a30c196ed082fce51c4d56026a1f4e33e",
+      "export": "reports/station_year_availability.csv",
+      "export_sha256": "ae32623409e8cccdd8c57831487cc62a30c196ed082fce51c4d56026a1f4e33e"
+    },
+    {
+      "source": "reports/data_availability.csv",
+      "source_sha256": "0fb11256c89a9486c6ccbbb6de72ad35ee4f7567892de1024681d379a4d3bb30",
+      "export": "docs/assets/data_availability.png",
+      "export_sha256": "8de3b744b53e87f4c688e4aadfcb9e05c48c67b0026d9b7a42474d955ba52270",
+      "exporter": "analysis/export_availability.py",
+      "exporter_sha256": "8e86e714e6fb56e9ea885d52b13a974ece6f05f53d41ca3dc9958905744b2dbf"
+    },
+    {
+      "source": "reports/station_year_availability.csv",
+      "source_sha256": "ae32623409e8cccdd8c57831487cc62a30c196ed082fce51c4d56026a1f4e33e",
+      "export": "docs/assets/pressure_availability_by_year.png",
+      "export_sha256": "d8bb5311271a9935d5c62dfc74f727944d1cfc67d3648cad126cf2741e9f5d35",
+      "exporter": "analysis/export_availability.py",
+      "exporter_sha256": "8e86e714e6fb56e9ea885d52b13a974ece6f05f53d41ca3dc9958905744b2dbf"
+    }
+  ]
+}

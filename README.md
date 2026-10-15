@@ -1,354 +1,128 @@
 # MetPipe Northeast
 
-**A regional weather-observation pipeline for historical analysis and future
-observation-supported nowcasting in the northeastern United States.**
+NOAA station files → checked hourly observations → PostgreSQL.
 
-MetPipe turns station observations into a consistent, traceable PostgreSQL
-dataset for investigating **regional weather patterns, temporal trends and
-short-term changes**, including how conditions evolve across stations and
-which observations may provide useful early signals for other locations.
+MetPipe handles the less glamorous part of weather analysis: inconsistent files,
+changing report times, unit conversions, quality flags and missing records. It
+builds an observed-only dataset that other projects can query without repeating
+that cleanup.
 
-It is intended to be used alongside **global and mesoscale numerical weather
-prediction (NWP) model outputs**, supporting the development and evaluation of
-statistical and machine-learning-assisted methods for local forecast refinement
-and observation-supported nowcasting. Historical data provides the development
-and evaluation foundation; future live-data adapters would connect that
-foundation to current conditions. NWP integration and machine-learning prediction
-components are planned, not yet implemented.
+The current dataset covers **20 stations across seven northeastern states,
+2005–2024**. The finalized layer contains **3,506,400 station-hour rows**, including
+hours with missing values. Data and database backups are not included in Git.
 
-![Map of the twenty MetPipe Northeast stations](docs/assets/station_network.svg)
+![Twenty-station Northeast network](docs/assets/station_network.svg)
 
-The network spans coastal and inland locations in MA, RI, CT, VT, NH, ME and NY.
+## What the pipeline does
 
-## What it does today
+- Loads annual LCDv1 CSV and GHCNh Parquet files without combining years by hand.
+- Checks station identity, timestamps, report types, units and source quality flags.
+- Uses incremental loads and file hashes to avoid duplicate ingestion.
+- Preserves both archives, then selects a value for each element and hour.
+- Exposes UTC/SI observations with source and timestamp provenance.
+- Reports availability by station, year and element.
 
-- Ingests, cleans and stores multi-year NOAA airport observations with
-  source-aware handling of timestamps, units, report types and quality flags.
-- Provides one selected routine observation per hour, plus daily, monthly and
-  annual summaries; missing observations remain missing.
-- Audits station-year and element availability so analysis can account for
-  gaps instead of treating file existence as complete coverage.
-- Exposes UTC/SI views for future joins with live observations and model output.
+The finalized policy prefers eligible GHCNh values. LCDv1 can supply a missing
+value or a verified fallback; it does not automatically override a known-bad
+primary value. Unresolved disagreements leave the affected element blank, not
+the whole hour. See [source selection](docs/finalized_observations.md).
 
-The validated local database covers **20 stations, 2005–2024**: 5,381,350 point
-observations and 3,495,851 selected hourly records. GHCNh supplies 2005–2019;
-LCDv1 supplies the preserved 2020–2024 observations. These counts describe the
-maintainer's local ingestion, not a database shipped in this repository.
-Raw data and database backups are excluded from Git.
+**Observed values stay separate from estimates.** Reconstruction models and
+weather-pattern analysis now belong to companion projects, not this pipeline.
 
-See the [ingestion report](docs/ingestion_2005_2024.md) and
-[working data scope](docs/data_scope.md). Coverage and element availability vary
-by station; documented gaps remain unfilled. The archive boundary at 2020 also
-requires care in trend analysis.
+## Data availability
 
-## Where it is going
+![Observed element availability, 2005–2024](docs/assets/data_availability.png)
 
-The following are **research and development goals, not implemented services**:
+Availability is the share of expected UTC hours with an accepted finalized value.
+It measures coverage, not independent measurement accuracy. The twenty-year
+average can hide outages; the [year-by-year pressure chart](docs/assets/pressure_availability_by_year.png)
+and [full availability report](docs/data_quality.md) show that detail.
 
-1. **Regional relationships and temporal evolution:** examine temperature,
-   moisture, wind and pressure trends, short-term tendencies and seasonal
-   variability; test station-to-station lead/lag relationships under
-   different weather regimes rather than assuming a fixed travel time.
-2. **Near-real-time observations:** add source-specific adapters for airport
-   reports and, where suitable, mesonets, coastal/marine stations and other
-   sensors, with latency, stale-data, unit and quality checks.
-3. **Observation-derived diagnostics:** evaluate pressure tendency, consistently
-   defined interstation pressure differences, coastal–inland contrasts and
-   other physically motivated indicators.
-4. **Experimental nowcasting and extrapolation:** test persistence, recent-trend
-   and upstream-station baselines, then assess whether model/radar context adds
-   useful skill, including through statistical and machine-learning-assisted
-   forecast refinement. Planned model inputs include HRRR, GFS and ECMWF
-   outputs, subject to access and consistent initialization/valid-time handling.
+Missing precipitation is not a dry hour. Gusts are only reported when applicable,
+and calm/variable wind states are separate from numeric direction.
 
-For example: *when a wind shift and pressure change appear at inland stations,
-do they provide useful advance information for the coast—and in which
-conditions does that relationship fail?* Correlation alone does not establish
-propagation or forecast skill.
+## Quick start
 
-Pressure-index ideas such as HKO's DP972 are methodological inspiration, not
-ready-made Northeast formulas. The current table stores **station pressure**;
-cross-station gradients need a consistent pressure reference and explicit
-treatment of elevation. See [project purpose and research roadmap](docs/project_purpose.md)
-for definitions, safeguards and the evaluation plan.
-
-MetPipe is currently a **data-engineering and weather-research foundation**,
-not an operational forecasting system, warning service or validated nowcast.
-
-## Pipeline
-
-1. Acquire annual files through the appropriate source adapter: historical
-   GHCNh UTC/SI Parquet or
-   [NOAA NCEI LCDv1 CSVs](https://www.ncei.noaa.gov/data/local-climatological-data/).
-2. Validate station identity, dates and source semantics; clean/convert records.
-3. Create or update a non-destructive PostgreSQL schema.
-4. Incrementally load observations using the source-specific loader and checkpoints.
-5. Validate coverage by station and year and query daily, monthly, and annual
-   summary views.
-
-Repeated pipeline runs are idempotent at the observation level. The
-`(datetime, station)` primary key and PostgreSQL upsert prevent duplicate records,
-refresh corrected values, and retain previously loaded years.
-
-## Repository layout
-
-```text
-metpipe_phase2/
-├── analysis/          # Exploratory multi-year analysis and plots
-│   ├── station_map.py  # Interactive airport map from NOAA CSV coordinates
-│   └── export_station_map.py # GitHub-ready static map from checked coordinates
-├── data/
-│   ├── raw/YYYY/      # Original NOAA CSVs by year (not committed)
-│   ├── raw/ghcnh/YYYY/ # Historical UTC/SI Parquet sources (not committed)
-│   ├── backups/       # Local pre-ingestion database backup (not committed)
-│   └── processed/YYYY/ # Cleaned CSVs by year (not committed)
-├── docs/
-│   ├── assets/        # Versioned README station map
-│   ├── project_purpose.md # Scientific intent and development roadmap
-│   └── aws/           # Local AWS reference artifacts (not committed)
-├── sql/
-│   ├── schema.sql     # Multi-year tables, indexes, and views
-│   ├── checks.sql     # Multi-year validation queries
-│   ├── backfill_checks.sql # Historical source/time/unit validation
-│   └── legacy/        # Superseded 2024-only manual ingestion SQL
-├── src/
-│   ├── file_utils.py  # Station-year filename parsing and discovery
-│   ├── main.py        # Schema and ingestion orchestrator
-│   ├── ingest.py      # Incremental cleaned-data loader
-│   ├── ghcnh_backfill.py # Source-aware historical adapter and checkpoints
-│   ├── audit_station_minutes.py # Hourly minute and coverage audit
-│   └── weather_data_cleanup.py
-├── tests/             # Standard-library unit tests
-├── .env.example
-└── requirements.txt
-```
-
-## Requirements
-
-- Python 3.10+
-- PostgreSQL
-- Packages in `requirements.txt`
-
-Create a virtual environment and install dependencies:
+Requires Python 3.10+ and PostgreSQL.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install -r requirements.txt
-```
-
-Create the default local database:
-
-```bash
+pip install -r requirements.txt
 createdb metpipe_northeast
 ```
 
-Connection settings can be overridden with environment variables:
+Connection variables are `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` and
+`DB_PASSWORD`; defaults are documented in [.env.example](.env.example).
+The scripts do not load `.env` automatically—export overrides in your shell.
 
-| Variable | Default |
-| --- | --- |
-| `DB_HOST` | `localhost` |
-| `DB_PORT` | `5432` |
-| `DB_NAME` | `metpipe_northeast` |
-| `DB_USER` | Current operating-system user |
-| `DB_PASSWORD` | No password |
-
-`.env.example` documents these variables, but the scripts do not automatically
-load a `.env` file. Export overrides in the shell before running the pipeline.
-
-## Input naming convention
-
-Put one station and one calendar year in each raw CSV:
+Place one station and one year in each LCDv1 input:
 
 ```text
-data/raw/<year>/<station>_hourly_<year>.csv
-```
-
-Examples:
-
-```text
-data/raw/2020/bos_hourly_2020.csv
 data/raw/2024/bos_hourly_2024.csv
-data/raw/2025/bos_hourly_2025.csv
-data/raw/2024/pvc_hourly_2024.csv
+data/raw/2024/pvd_hourly_2024.csv
 ```
 
-The cleaner produces corresponding files such as
-`data/processed/2025/bos_hourly_2025_cleaned.csv`. Flat files directly in
-`data/raw/` or `data/processed/` are also accepted for older datasets. A
-station-year must appear only once; duplicate files and files placed under the
-wrong year folder cause an error. A CSV containing multiple calendar years must
-be split before cleaning. All matching years are loaded into the same database
-table, so adding an older or newer year never requires concatenating CSVs.
-
-The cleaner expects legacy NOAA LCDv1 columns, including `DATE` and
-`HourlyDryBulbTemperature`. The 2020–2024 files are in US customary units
-(temperature in °F, precipitation in inches, wind speed in mph, and station
-pressure in inHg). LCDv2 bulk CSVs use metric units and require explicit
-conversion before mixing them with these records.
-
-## Twenty-station network
-
-There are 100 raw station-year CSVs locally. The original 2024 ALB, BOS, JFK,
-and PVD files came from the earlier NOAA download; the other 96 files came
-from the LCDv1 bulk archive. The archive URL format is
-`https://www.ncei.noaa.gov/data/local-climatological-data/access/<year>/<LCDv1 ID>.csv`.
-For example, Boston Logan 2024 is
-[72509014739.csv](https://www.ncei.noaa.gov/data/local-climatological-data/access/2024/72509014739.csv).
-
-| Code | Station | GHCN ID | LCDv1 ID | Checked hourly minute |
-| --- | --- | --- | --- | --- |
-| ALB | Albany International Airport, NY | USW00014735 | 72518014735 | :51 |
-| BOS | Boston Logan International Airport, MA | USW00014739 | 72509014739 | :54 |
-| JFK | John F. Kennedy International Airport, NY | USW00094789 | 74486094789 | :51 |
-| PVD | Rhode Island T. F. Green International Airport, RI | USW00014765 | 72507014765 | :51 |
-| PVC | Provincetown Municipal Airport, MA | USW00064708 | 72507364708 | :56 |
-| ORH | Worcester Regional Airport, MA | USW00094746 | 72510094746 | :54 |
-| BDL | Bradley International Airport, CT | USW00014740 | 72508014740 | :51 |
-| PWM | Portland International Jetport, ME | USW00014764 | 72606014764 | :51 |
-| BTV | Burlington International Airport, VT | USW00014742 | 72617014742 | :54 |
-| MHT | Manchester Boston Regional Airport, NH | USW00014710 | 74394514710 | :53 |
-| AUG | Augusta State Airport, ME | USW00014605 | 72618514605 | :53 |
-| BAF | Westfield-Barnes Regional Airport, MA | USW00014775 | 74491514775 | :53 |
-| DDH | Bennington William H. Morse State Airport, VT | USW00054781 | 72616654781 | :54 |
-| EWB | New Bedford Regional Airport, MA | USW00094726 | 72506594726 | :53 |
-| HVN | Tweed-New Haven Airport, CT | USW00014758 | 72504514758 | :53 |
-| HYA | Cape Cod Gateway Airport (Hyannis), MA | USW00094720 | 72506794720 | :56 |
-| LEB | Lebanon Municipal Airport, NH | USW00094765 | 72611694765 | :53 |
-| MVY | Martha's Vineyard Airport, MA | USW00094724 | 72506694724 | :53 |
-| PYM | Plymouth Municipal Airport, MA | USW00054769 | 72506454769 | :52 |
-| UUU | Newport State Airport, RI | USW00014787 | 72507914787 | :53 |
-
-The minute values were checked from regular `FM-15` reports separately for
-every year of **2020–2024**, not imposed on the historical backfill.
-Scheduled-minute hourly coverage varies by station and year. Missing hours
-remain missing in the hourly view; station-specific limitations are documented
-in the [ingestion report](docs/ingestion_2005_2024.md).
-
-## Usage
-
-Clean every discovered raw station-year file:
-
 ```bash
-python3 src/weather_data_cleanup.py
-```
-
-Create or update the schema and incrementally ingest every cleaned file:
-
-```bash
-python3 src/main.py
-```
-
-Run database validation:
-
-```bash
+python src/weather_data_cleanup.py
+python src/main.py
 psql -d metpipe_northeast -f sql/checks.sql
-psql -d metpipe_northeast -f sql/backfill_checks.sql
-.venv/bin/python analysis/validate_backfill.py
 ```
 
-Backfill historical GHCNh data (inclusive local-standard-time years):
+Historical GHCNh backfill, archive reconciliation and the complete setup sequence
+are covered in [the pipeline guide](docs/pipeline.md). Database publication is
+explicit; the reconciliation scripts require `--publish`.
+
+## Query the result
+
+```sql
+SELECT station, hour_utc, temperature_c, station_pressure_hpa
+FROM metpipe_final.weather_hourly_utc
+WHERE hour_utc >= '2024-01-01T00:00Z'
+  AND hour_utc <  '2025-01-01T00:00Z'
+ORDER BY station, hour_utc;
+```
+
+Use the finalized view for new observed-data work. Older `public` views retain
+their original units and fixed UTC−5 convention; they are not interchangeable
+with UTC/SI fields.
+
+## Explore and test
+
+Start with [the data-quality notebook](notebooks/01_data_quality.ipynb). Its saved
+tables and figures work on GitHub without a running database.
 
 ```bash
-python3 src/ghcnh_backfill.py --start 2005 --end 2019
+pip install -r requirements-eda.txt
+python -m unittest discover -s tests -v
+python analysis/export_station_map.py
 ```
 
-This dedicated adapter requires network access and `pyarrow`. It caches annual
-Parquet files, converts UTC/SI to the legacy table's fixed UTC-5/customary units,
-and preserves UTC, raw values, element-level source/QC flags and coded clouds.
-It downloads the next UTC year for the five-hour local-year boundary halo.
-The adapter is deliberately restricted to 2005–2019 and cannot overwrite LCDv1
-rows. The legacy CSV loader also cannot overwrite GHCNh rows. Completed
-station/source-year files have SHA-256 checkpoints; repeat runs do not insert
-duplicates. Known failed QC values are masked, but unknown/not-checked flags
-remain explicit and should be screened for each analysis.
-
-Run unit tests:
-
-```bash
-python3 -m unittest discover -s tests -v
+```text
+src/          Source adapters, cleaning and ingestion
+sql/          Schemas, migrations and validation queries
+analysis/     Source reconciliation, audits and station maps
+notebooks/    Data-quality walkthrough
+reports/      Small, versioned availability summaries
+docs/         Setup, data contract and technical references
+tests/        Ingestion, selection, timing and missingness checks
 ```
 
-Generate and open an interactive map of the local station network:
+## Built on MetPipe
 
-```bash
-python3 analysis/station_map.py
-open outputs/station_map.html
-python3 analysis/export_station_map.py
-```
+| Companion project | Question |
+| --- | --- |
+| **MetPipe Reconstruction** | Can nearby observations recover useful PVC pressure estimates without overwriting measured values? |
+| **MetPipe Regional Analysis** | How do regional and temporal patterns vary, which event-timing relationships hold up, and can useful pressure indices be defined? |
 
-The interactive map reads each station's name and coordinates from its newest
-local raw CSV that contains those fields, falling back to the versioned
-`analysis/assets/station_network.json` when raw data is absent. The static README
-map uses that same checked coordinate snapshot and can be regenerated offline
-without a database or private datasets. The original four 2024 order downloads omit
-coordinates, so the script uses their 2023 bulk files. All 20 confirmed stations
-now have local files and appear as equal circles. Future additions in
-`analysis/candidate_stations.csv` appear as
-hollow diamonds until their raw files are added. Historical report availability
-is checked separately from field completeness and database ingestion.
-Candidate coordinates were sourced from NOAA's
-[LCDv2 station list](https://www.ncei.noaa.gov/oa/local-climatological-data/v2/doc/lcdv2-station-list.txt),
-with New Bedford and Bennington checked against their LCDv1 files.
-The generated HTML is self-contained: it uses bundled
-[Natural Earth](https://www.naturalearthdata.com/about/) public-domain
-boundaries and does not request map tiles or require internet access.
+The companions are separate local repositories; their GitHub links will be added
+when published. They own the models, validation and scientific interpretation.
+This repository owns ingestion, transformation, provenance and data quality.
 
-## Database objects
-
-Tables:
-
-- `station_metadata`
-- `weather_observations`
-- `ghcnh_ingestion_files` — historical file checkpoints and provenance
-
-Views:
-
-- `weather_hourly`
-- `weather_hourly_utc` — UTC timestamps and SI units for model/real-time joins
-- `weather_daily_summary`
-- `weather_monthly_summary`
-- `weather_annual_summary`
-
-The monthly view uses a full month date such as `2025-01-01`, preventing
-January observations from different years from being combined.
-
-For LCDv1, `weather_hourly` selects only regular NOAA `FM-15` reports at the
-representative minute stored in `station_metadata`. For GHCNh, it selects a
-routine report per hour using report priority, core-element completeness and
-the latest routine observation, without imposing a modern fixed minute on
-historical schedules. Specials cannot fill missing routine hours. The
-`observation_datetime` field retains the actual time rather than the hourly
-bucket. Audit legacy raw CSVs before loading new years:
-
-```bash
-python3 src/audit_station_minutes.py
-```
-
-The audit uses `FM-15` reports to show the dominant minute and the exact-minute
-hourly coverage for each station-year. The 2020–2024 archive files have stable
-minutes for each of the twenty stations; the checked values are seeded in
-`sql/schema.sql`. Ingestion stops if a new file's dominant minute differs from
-the stored value. A future reporting-schedule change needs an explicit review
-and a year-aware metadata update.
-
-GHCNh precipitation is conservative: only scheduled METAR hourly values enter
-the primary amount column. Trace amounts are zero with a separate trace flag;
-blanks are unknown, not dry hours. Accumulations and special-report values
-remain in provenance rather than being added as hourly totals. Existing LCDv1
-trace handling is preserved, not retroactively reinterpreted. Summary-view
-precipitation totals are sums of available amounts, not certified complete
-rainfall totals. Coded GHCNh cloud fields are retained but not fully decoded.
-
-## Migrating from the original 2024 schema
-
-The original `northeast_weather_2024` objects are not modified or deleted. The
-recommended migration is to create the new `metpipe_northeast` database and run
-the pipeline against the existing cleaned CSVs. This rebuilds the data in the
-generic schema while preserving the old Phase 2 database as a reference.
-
-## Data and credentials
-
-CSV datasets, local environment files, generated plots, virtual environments,
-and AWS reference PDFs are excluded from Git. Never commit database credentials
-or private SSH keys.
+A possible next application is weather-informed **ISO New England load
+forecasting**: join regional weather features to load and calendar data, then
+compare against simple demand baselines. ISO-NE publishes
+[load data](https://www.iso-ne.com/isoexpress/web/reports/load-and-demand/-/tree/demand-by-zone)
+and [forecast materials](https://www.iso-ne.com/system-planning/system-forecasting/load-forecast).
+No load forecast, ISO integration or energy-market model is implemented here.
