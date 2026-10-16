@@ -1,8 +1,9 @@
 # MetPipe Northeast
 
-NOAA station files → checked hourly observations → PostgreSQL.
+MetPipe is a data pipeline that extracts weather observations from NOAA archives, standardizes and validates the data, 
+and loads consistent hourly records into PostgreSQL.
 
-MetPipe handles the less glamorous part of weather analysis: inconsistent files,
+It handles the less glamorous part of weather analysis: inconsistent files,
 changing report times, unit conversions, quality flags and missing records. It
 builds an observed-only dataset that other projects can query without repeating
 that cleanup.
